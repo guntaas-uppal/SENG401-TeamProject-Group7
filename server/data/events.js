@@ -4,9 +4,9 @@ const city = require("./cityEvents");
 const country = require("./countryEvents");
 
 const events = {
-household,
-city,
-country,
+    household,
+    city,
+    country,
 };
 
 module.exports = events;
