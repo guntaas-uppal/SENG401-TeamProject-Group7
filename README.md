@@ -1,63 +1,55 @@
-# SENG401-TeamProject-Group7
-
 # SDG 12 Sustainability Simulator
 
-A serious digital game based on **United Nations Sustainable Development Goal 12: Responsible Consumption and Production**.
+## Overview
 
-This project is being developed as part of **SENG 401**. The game is a turn based decision making simulation that helps players understand how everyday choices related to consumption and production affect sustainability outcomes.
+SDG 12 Sustainability Simulator is a serious digital game based on **United Nations Sustainable Development Goal 12: Responsible Consumption and Production**.
 
-## Project Overview
-
-The game allows players to make sustainability related decisions and immediately observe their impact on:
-
-- Waste generation
-- Resource usage
-- Financial cost
-- Sustainability score
-
-Gameplay is structured across three levels of increasing complexity:
+The purpose of this project is to help players understand how everyday decisions related to consumption and production affect sustainability outcomes. The game is being developed as a **turn based decision making simulation** with three levels of increasing complexity:
 
 - Household
 - City
 - Country
 
-The system is being developed as a responsive web application using:
+The project is built as a web application using:
 
-- React for the frontend
-- Node.js with Express for the backend
-- SQLite for local database development
+- **React** with **Vite** for the frontend
+- **Node.js** with **Express** for the backend
+- **SQLite** for local database development
 
 ---
 
 ## Current Project Status
 
-Current setup completed:
+At the current stage, the project includes:
 
-- React frontend initialized with Vite
-- Express backend initialized
-- Basic backend server route working
-- Project folder structure created
+- React frontend initialized and running
+- Express backend initialized and running
+- Client and server folder structure created
+- Basic backend test route working
+- Initial project setup ready for game development
 
 ---
 
-## Requirements
+## Technology Stack
 
-Before running the project, install the following:
+### Frontend
+- React
+- Vite
+- JavaScript
+- CSS
 
-### Required Software
+### Backend
+- Node.js
+- Express
+- CORS
 
-- [Node.js](https://nodejs.org/)  
-  Recommended: LTS version
+### Database
+- SQLite using the `sqlite3` npm package
 
-- [Git](https://git-scm.com/)
-
-- [Visual Studio Code](https://code.visualstudio.com/)  
-  Recommended but optional
-
-### Optional Tools
-
-- [DB Browser for SQLite](https://sqlitebrowser.org/)
-- [Postman](https://www.postman.com/)
+### Development Tools
+- Git
+- npm
+- Visual Studio Code
 
 ---
 
@@ -66,8 +58,16 @@ Before running the project, install the following:
 ```text
 SENG401-TeamProject-Group7/
 │
-├── client/        # React frontend
-├── server/        # Express backend
+├── client/                  # Frontend React application
+│   ├── public/
+│   ├── src/
+│   ├── package.json
+│   └── vite.config.js
+│
+├── server/                  # Backend Express application
+│   ├── app.js
+│   └── package.json
+│
 ├── README.md
 ├── LICENSE
 └── .gitignore
