@@ -1,4 +1,3 @@
-
 const events = require("../data/events");
 
 const OBJECTIVE_TURNS = {
@@ -45,29 +44,50 @@ function clamp(value, min = 0, max = 100) {
 }
 
 /**
- * Time-based multiplier: early sustainable actions are more effective.
- * Returns a multiplier between 0.6 and 1.4 depending on how early/late in the level.
+ * Difficulty modes per level:
+ *   household — Normal throughout (early 1.3×, mid 1.0×, late 0.8×)
+ *   city      — Normal for turns 1-30, then Hard from turn 31 onward
+ *   country   — Hard from turn 1 (no easy phase)
+ *
+ * Normal multipliers: early 1.3×, mid 1.0×, late 0.8×
+ * Hard  multipliers: early 1.1×, mid 0.85×, late 0.65×
  */
+function getDifficultyMode(level, turnsCompleted) {
+  if (level === "country") return "hard";
+  if (level === "city" && turnsCompleted >= 30) return "hard";
+  return "normal";
+}
+
 function getTimeMultiplier(level, turnsCompleted) {
   const objective = OBJECTIVE_TURNS[level] || 50;
-  const progress = turnsCompleted / objective; // 0.0 → 1.0+
+  const progress = turnsCompleted / objective;
+  const mode = getDifficultyMode(level, turnsCompleted);
 
-  // Early game (0-30%): 1.4x multiplier for positive effects
-  // Mid game (30-70%): 1.0x
-  // Late game (70%+): 0.7x for positive, 1.3x for negative
-  if (progress <= 0.3) return 1.4;
+  if (mode === "hard") {
+    if (progress <= 0.3) return 1.1;
+    if (progress <= 0.7) return 0.85;
+    return 0.65;
+  }
+  // normal (household, city turns 1-30)
+  if (progress <= 0.3) return 1.3;
   if (progress <= 0.7) return 1.0;
-  return 0.7;
+  return 0.8;
 }
 
 /**
- * Late-game penalty multiplier for negative choices.
- * Negative decisions hurt MORE the later you make them.
+ * Penalty multiplier for negative choices — harder levels punish bad decisions more.
  */
 function getLateGamePenalty(level, turnsCompleted) {
   const objective = OBJECTIVE_TURNS[level] || 50;
   const progress = turnsCompleted / objective;
+  const mode = getDifficultyMode(level, turnsCompleted);
 
+  if (mode === "hard") {
+    if (progress <= 0.3) return 1.2;
+    if (progress <= 0.7) return 1.4;
+    return 1.6;
+  }
+  // normal
   if (progress <= 0.3) return 1.0;
   if (progress <= 0.7) return 1.15;
   return 1.35;
@@ -99,11 +119,9 @@ function applyOptionToProgress(progress, option) {
   const timeMultiplier = getTimeMultiplier(level, turns);
   const latePenalty = getLateGamePenalty(level, turns);
 
-  // Determine if this is a positive or negative option
   const isPositive = option.type === "positive";
   const isNegative = option.type === "negative";
 
-  // Apply time-based multiplier to sustainability changes
   let sustainDelta = option.sustainability;
   if (isPositive && sustainDelta > 0) {
     sustainDelta = Math.round(sustainDelta * timeMultiplier);
@@ -111,13 +129,11 @@ function applyOptionToProgress(progress, option) {
     sustainDelta = Math.round(sustainDelta * latePenalty);
   }
 
-  // Apply multipliers to waste (inverted: positive = less waste)
   let wasteDelta = option.waste;
   if (isNegative && wasteDelta > 0) {
     wasteDelta = Math.round(wasteDelta * latePenalty);
   }
 
-  // Streak logic
   let streak = progress.streak || 0;
   let bestStreak = progress.best_streak || 0;
   if (isPositive) {
@@ -127,7 +143,6 @@ function applyOptionToProgress(progress, option) {
   }
   if (streak > bestStreak) bestStreak = streak;
 
-  // Streak bonus: every 5 consecutive positive decisions, bonus sustainability
   let streakBonus = 0;
   if (streak > 0 && streak % 5 === 0) {
     streakBonus = 3;
@@ -151,7 +166,6 @@ function applyOptionToProgress(progress, option) {
   return updated;
 }
 
-// Achievement definitions
 const ACHIEVEMENT_DEFS = [
   { key: "first_step", label: "First Step", description: "Complete your first turn", icon: "🌱", check: (h) => h.totalTurns >= 1 },
   { key: "household_complete", label: "Home Keeper", description: "Complete the Household level", icon: "🏠", check: (h) => h.householdTurns >= 50 },
@@ -198,8 +212,7 @@ module.exports = {
   calculateStars,
   applyOptionToProgress,
   getTimeMultiplier,
+  getDifficultyMode,
   ACHIEVEMENT_DEFS,
   checkAchievements,
 };
-
-
