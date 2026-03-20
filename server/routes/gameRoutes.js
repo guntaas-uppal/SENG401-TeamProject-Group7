@@ -122,9 +122,16 @@ router.post("/choose", async (req, res) => {
       if (updated.turns_completed >= 25) {
         await run(`UPDATE user_progress SET unlocked = 1 WHERE user_id = ? AND level = 'city'`, [userId]);
       }
-      if (updated.turns_completed >= 50) {
-        await run(`UPDATE user_progress SET unlocked = 1 WHERE user_id = ? AND level = 'country'`, [userId]);
-      }
+    }
+
+    // Country unlocks when player has completed 50 household turns AND 26 city turns
+    const allProgress = await all(
+      `SELECT level, turns_completed FROM user_progress WHERE user_id = ?`, [userId]
+    );
+    const householdProgress = allProgress.find((r) => r.level === "household") || {};
+    const cityProgress = allProgress.find((r) => r.level === "city") || {};
+    if ((householdProgress.turns_completed || 0) >= 50 && (cityProgress.turns_completed || 0) >= 26) {
+      await run(`UPDATE user_progress SET unlocked = 1 WHERE user_id = ? AND level = 'country'`, [userId]);
     }
 
     const refreshedProgress = await get(
@@ -236,3 +243,4 @@ router.get("/history/:userId/:level", async (req, res) => {
 });
 
 module.exports = router;
+
