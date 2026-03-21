@@ -9,6 +9,14 @@ function LoginPage({ onAuthSuccess }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  function switchMode(newMode) {
+    setMode(newMode);
+    setId("");
+    setName("");
+    setPassword("");
+    setError("");
+  }
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
@@ -34,8 +42,8 @@ function LoginPage({ onAuthSuccess }) {
         </div>
 
         <div className="auth-switch">
-          <button className={mode === "login" ? "active" : ""} onClick={() => setMode("login")} type="button">Sign In</button>
-          <button className={mode === "signup" ? "active" : ""} onClick={() => setMode("signup")} type="button">Create Account</button>
+          <button className={mode === "login" ? "active" : ""} onClick={() => switchMode("login")} type="button">Sign In</button>
+          <button className={mode === "signup" ? "active" : ""} onClick={() => switchMode("signup")} type="button">Create Account</button>
         </div>
 
         <form onSubmit={handleSubmit} className="auth-form">
@@ -58,18 +66,6 @@ function LoginPage({ onAuthSuccess }) {
             {loading ? "Please wait..." : mode === "login" ? "Sign In" : "Create Account"}
           </button>
         </form>
-
-        <div className="demo-info">
-          <h3>Demo Accounts</h3>
-          <p className="subtext">Use these credentials to try different game states:</p>
-          <ul className="demo-list">
-            <li><strong>ADMIN-001</strong> / admin123 — All levels unlocked, full progress</li>
-            <li><strong>PLAYER-001</strong> / player123 — Fresh start, no progress</li>
-            <li><strong>PLAYER-025</strong> / player123 — Day 25 into Household level</li>
-            <li><strong>PLAYER-050</strong> / player123 — Household completed</li>
-            <li><strong>PLAYER-CITY</strong> / player123 — City level in progress</li>
-          </ul>
-        </div>
       </div>
     </div>
   );
