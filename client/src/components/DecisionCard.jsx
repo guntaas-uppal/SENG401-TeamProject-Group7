@@ -1,12 +1,4 @@
-function DecisionCard({ option, index, onChoose, disabled, revealed, chosen }) {
-  const typeLabels = {
-    positive: "Sustainable",
-    neutral: "Moderate",
-    negative: "Unsustainable",
-  };
-
-  const typeLabel = typeLabels[option.type] || "Moderate";
-
+function DecisionCard({ option, index, onChoose, disabled, revealed, chosen, hinted }) {
   function renderChange(label, value, invertGood = false) {
     if (value === 0) return null;
     const isGood = invertGood ? value < 0 : value > 0;
@@ -18,8 +10,7 @@ function DecisionCard({ option, index, onChoose, disabled, revealed, chosen }) {
   }
 
   return (
-    <div className={`decision-card ${revealed ? option.type : ""} ${chosen ? "chosen" : ""}`}>
-      <div className="decision-type-label">{typeLabel}</div>
+    <div className={`decision-card ${revealed ? option.type : ""} ${chosen ? "chosen" : ""} ${hinted ? "hinted" : ""}`}>
       <h3>{option.label}</h3>
 
       {revealed && (
