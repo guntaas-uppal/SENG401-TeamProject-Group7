@@ -4,10 +4,29 @@ import DecisionCard from "../components/DecisionCard";
 import MetricBar from "../components/MetricBar";
 
 const LEVEL_CONFIG = {
-  household: { icon: "🏠", label: "Household", timeUnit: "Day", objective: 50, unlockAt: 25 },
-  city: { icon: "🏙️", label: "City", timeUnit: "Week", objective: 52 },
-  country: { icon: "🌍", label: "Country", timeUnit: "Month", objective: 60 },
+  household: { icon: "🏠", label: "Household", timeUnit: "Day", objective: 50, unlockAt: 25, difficulty: "normal" },
+  city: { icon: "🏙️", label: "City", timeUnit: "Week", objective: 52, unlockHint: "Complete at least 25 Household turns to unlock", difficulty: "normal→hard" },
+  country: { icon: "🌍", label: "Country", timeUnit: "Month", objective: 60, unlockHint: "Complete at least 50 Household turns and 26 City turns to unlock", difficulty: "hard" },
 };
+
+/** Mirror of server getDifficultyMode — keeps phase badge in sync */
+function getDifficultyMode(level, turnsCompleted) {
+  if (level === "country") return "hard";
+  if (level === "city" && turnsCompleted >= 30) return "hard";
+  return "normal";
+}
+
+/** Returns phase label + multiplier string for the header badge */
+function getPhaseBadge(level, turnsCompleted, objective) {
+  const pct = turnsCompleted / objective;
+  const mode = getDifficultyMode(level, turnsCompleted);
+  const phase = pct <= 0.3 ? "early" : pct <= 0.7 ? "mid" : "late";
+  const labels = {
+    normal: { early: "Early Game (1.3× bonus)", mid: "Mid Game (1.0×)", late: "Late Game (0.8×)" },
+    hard:   { early: "Hard Mode (1.1× bonus)", mid:  "Hard Mode (0.85×)", late: "Hard Mode (0.65×)" },
+  };
+  return { phase, mode, text: labels[mode][phase] };
+}
 
 const ACHIEVEMENTS = {
   first_step: { label: "First Step", icon: "🌱", description: "Complete your first turn" },
@@ -19,6 +38,11 @@ const ACHIEVEMENTS = {
   five_stars: { label: "Perfection", icon: "⭐", description: "Earn 5 stars on any level" },
   sustainability_90: { label: "Green Champion", icon: "♻️", description: "Reach 90+ sustainability" },
   all_levels: { label: "Full Circle", icon: "🎯", description: "Play all three levels" },
+  city_complete: { label: "City Master", icon: "🌆", description: "Complete the City level" },
+  country_complete: { label: "Nation Builder", icon: "🗺️", description: "Complete the Country level" },
+  streak_20: { label: "Legendary", icon: "💎", description: "20-turn positive streak" },
+  centurion: { label: "Centurion", icon: "💯", description: "Complete 100 turns across all levels" },
+  sustainability_100: { label: "Eco Warrior", icon: "🌿", description: "Reach a perfect 100 sustainability score" },
 };
 
 /** Fisher-Yates shuffle — returns new array with original indices tracked */
@@ -29,6 +53,34 @@ function shuffleOptions(options) {
     [indexed[i], indexed[j]] = [indexed[j], indexed[i]];
   }
   return indexed;
+}
+
+/* ── Hint helpers ────────────────────────────────────────────── */
+const HINTS_STORAGE_KEY = (userId) => `ecosim_hints_${userId}`;
+const HINT_START = 25;
+
+function loadHints(userId) {
+  try {
+    const raw = localStorage.getItem(HINTS_STORAGE_KEY(userId));
+    if (raw !== null) return parseInt(raw, 10);
+  } catch (_) {}
+  // First time this user is seen — write the starting value immediately
+  saveHints(userId, HINT_START);
+  return HINT_START;
+}
+
+function saveHints(userId, count) {
+  try { localStorage.setItem(HINTS_STORAGE_KEY(userId), String(count)); } catch (_) {}
+}
+
+/** Returns the shuffled index of the best (positive) option, or the highest sustainability one */
+function getBestOptionIdx(shuffledOptions) {
+  const posIdx = shuffledOptions.findIndex((o) => o.type === "positive");
+  if (posIdx !== -1) return posIdx;
+  // fallback: pick highest sustainability delta
+  let best = 0;
+  shuffledOptions.forEach((o, i) => { if (o.sustainability > shuffledOptions[best].sustainability) best = i; });
+  return best;
 }
 
 /* ============================================================
@@ -142,9 +194,16 @@ function DashboardView({ user, summary, navigate, isUnlocked }) {
             return (
               <div key={key} className={`level-card ${unlocked ? "" : "locked"}`} onClick={() => unlocked && navigate("game", { level: key })}>
                 {!unlocked && <div className="lock-badge">🔒</div>}
+                {!unlocked && cfg.unlockHint && (
+                  <div className="unlock-tooltip">{cfg.unlockHint}</div>
+                )}
                 <div className="lc-icon">{cfg.icon}</div>
                 <h3>{cfg.label}</h3>
                 <p className="subtext">{cfg.timeUnit}-based decisions</p>
+                <p className="lc-difficulty">
+                  {cfg.difficulty === "hard" ? "🔴 Hard mode" : cfg.difficulty === "normal→hard" ? "🟡 Normal → Hard at turn 30" : "🟢 Normal mode"}
+                  &nbsp;·&nbsp; 🎯 Score 90+ for 5⭐
+                </p>
                 <div className="progress-bar"><div className="progress-fill" style={{ width: `${pct}%` }} /></div>
                 <p className="subtext">{lvl.turns_completed || 0} / {cfg.objective} turns</p>
                 <div className="lc-bottom">
@@ -196,6 +255,11 @@ function PlayView({ user, level, navigate, onUpdate }) {
   const [toasts, setToasts] = useState([]);
   const [showReset, setShowReset] = useState(false);
   const [pendingNextEvent, setPendingNextEvent] = useState(null);
+  const [hints, setHints] = useState(() => loadHints(user.id));
+  const [showHint, setShowHint] = useState(false);
+  const [hintIdx, setHintIdx] = useState(null);
+  const [levelComplete, setLevelComplete] = useState(false);
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false);
 
   const meta = LEVEL_CONFIG[level];
 
@@ -218,9 +282,17 @@ function PlayView({ user, level, navigate, onUpdate }) {
       setRevealed(false);
       setChosenShuffledIdx(null);
       setPendingNextEvent(null);
+      setLevelComplete(false);
+      setShowFeedbackModal(false);
       const result = await api.getProgress(user.id, level);
       setProgress(result.progress);
       setEvent(result.event);
+
+      // If this is a fresh player (no turns completed on household), reset hints to starting value
+      if (level === "household" && (result.progress.turns_completed || 0) === 0) {
+        saveHints(user.id, HINT_START);
+        setHints(HINT_START);
+      }
     } catch (err) {
       addToast(err.message, "error");
     } finally {
@@ -232,6 +304,16 @@ function PlayView({ user, level, navigate, onUpdate }) {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, msg, type }]);
     setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 4000);
+  }
+
+  function useHint() {
+    if (hints <= 0 || revealed || choosing) return;
+    const bestIdx = getBestOptionIdx(shuffledOptions);
+    setHintIdx(bestIdx);
+    setShowHint(true);
+    const newCount = hints - 1;
+    setHints(newCount);
+    saveHints(user.id, newCount);
   }
 
   async function handleChoose(shuffledIdx) {
@@ -251,7 +333,9 @@ function PlayView({ user, level, navigate, onUpdate }) {
         label: opt.label, type: opt.type,
         changes: { waste: opt.waste, resources: opt.resources, cost: opt.cost, sustainability: opt.sustainability },
         timeMultiplier: result.timeMultiplier, streakBonus: result.streakBonus, streak: result.progress.streak,
+        isBest: opt.type === "positive",
       });
+      setShowFeedbackModal(true);
 
       if (result.newAchievements?.length) {
         result.newAchievements.forEach((a) => addToast(`${a.icon} Achievement: ${a.label}`, "achievement"));
@@ -262,8 +346,28 @@ function PlayView({ user, level, navigate, onUpdate }) {
       setPendingNextEvent(result.nextEvent);
       onUpdate();
 
-      if (result.progress.turns_completed >= meta.objective && result.progress.stars > 0) {
-        setTimeout(() => navigate("summary", { level, result: result.progress }), 3000);
+      const newTurns = result.progress.turns_completed;
+      const prevTurns = newTurns - 1;
+      const alreadyCompleted = prevTurns >= meta.objective;
+
+      if (!alreadyCompleted) {
+        let updatedHints = hints;
+
+        if (newTurns >= meta.objective && result.progress.stars > 0 && !levelComplete) {
+          setLevelComplete(true);
+          updatedHints += 10;
+          saveHints(user.id, updatedHints);
+          setHints(updatedHints);
+        } else {
+          if (Math.floor(newTurns / 5) > Math.floor(prevTurns / 5)) {
+            updatedHints += 1;
+            addToast("💡 You earned a hint! (" + updatedHints + " remaining)", "info");
+          }
+          if (updatedHints !== hints) {
+            setHints(updatedHints);
+            saveHints(user.id, updatedHints);
+          }
+        }
       }
     } catch (err) {
       addToast(err.message, "error");
@@ -294,7 +398,7 @@ function PlayView({ user, level, navigate, onUpdate }) {
   }
 
   const turnPct = Math.min(100, Math.round((progress.turns_completed / meta.objective) * 100));
-  const phase = progress.turns_completed / meta.objective <= 0.3 ? "early" : progress.turns_completed / meta.objective <= 0.7 ? "mid" : "late";
+  const { phase, mode, text: phaseBadgeText } = getPhaseBadge(level, progress.turns_completed, meta.objective);
 
   return (
     <>
@@ -316,10 +420,18 @@ function PlayView({ user, level, navigate, onUpdate }) {
           </div>
         </div>
         <div className="game-header-right">
-          <span className={`phase-badge phase-${phase}`}>
-            {phase === "early" ? "Early Game (1.4× bonus)" : phase === "mid" ? "Mid Game (1.0×)" : "Late Game (0.7× bonus)"}
+          <span className={`phase-badge phase-${phase} ${mode === "hard" ? "phase-hard" : ""}`}>
+            {phaseBadgeText}
           </span>
           {progress.streak > 0 && <span className="streak-badge">🔥 {progress.streak} streak</span>}
+          <button
+            className={`hint-btn ${hints <= 0 || revealed || choosing ? "hint-btn-disabled" : ""}`}
+            onClick={useHint}
+            disabled={hints <= 0 || revealed || choosing}
+            title={hints <= 0 ? "No hints remaining" : "Use a hint to reveal the best option"}
+          >
+            💡 {hints} hints
+          </button>
         </div>
       </div>
 
@@ -337,29 +449,68 @@ function PlayView({ user, level, navigate, onUpdate }) {
           <MetricBar label="Financial Cost" value={progress.cost} color="#999" invertGood />
           <MetricBar label="Sustainability Score" value={progress.sustainability} color="#3b82f6" />
           <p className="subtext">Lower = better for waste, resources, cost. Higher = better for sustainability.</p>
+          <p className="objective-hint">
+            🎯 Target: <strong>90+</strong> for 5⭐ &nbsp;·&nbsp; <strong>80+</strong> for 4⭐ &nbsp;·&nbsp; <strong>70+</strong> for 3⭐ &nbsp;·&nbsp; current: <strong style={{color: progress.sustainability >= 90 ? "#4ade80" : progress.sustainability >= 70 ? "#facc15" : "var(--red)"}}>{progress.sustainability}</strong>
+          </p>
           {progress.stars > 0 && (
             <p className="stars-display">{"⭐".repeat(progress.stars)}{"☆".repeat(5 - progress.stars)} — {progress.stars}/5 Stars</p>
           )}
         </section>
       </div>
 
-      {/* Feedback (shown after reveal) */}
-      {feedback && revealed && (
-        <div className={`feedback-panel feedback-${feedback.type}`}>
-          <div className="feedback-top">
-            <span className="feedback-badge">
-              {feedback.type === "positive" ? "✅ Sustainable Choice" : feedback.type === "negative" ? "⚠️ Unsustainable Choice" : "➡️ Moderate Choice"}
-            </span>
-            {feedback.timeMultiplier !== 1.0 && <span className="subtext">Time effect: {feedback.timeMultiplier}×</span>}
-          </div>
-          <p>{feedback.label}</p>
-          <div className="feedback-changes">
-            {Object.entries(feedback.changes).map(([k, v]) => {
-              if (v === 0) return null;
-              const good = k === "sustainability" ? v > 0 : v < 0;
-              return <span key={k} className={`change-tag ${good ? "good" : "bad"}`}>{k}: {v > 0 ? "+" : ""}{v}</span>;
-            })}
-            {feedback.streakBonus > 0 && <span className="change-tag good">streak: +{feedback.streakBonus}</span>}
+      {/* Feedback Modal (shown after each decision) */}
+      {showFeedbackModal && feedback && (
+        <div className="modal-overlay">
+          <div className="modal-card feedback-modal">
+            <div className={`feedback-modal-header feedback-modal-${feedback.type}`}>
+              <span className="feedback-badge">
+                {feedback.type === "positive" ? "✅ Best Choice!" : feedback.type === "negative" ? "⚠️ Unsustainable Choice" : "➡️ Moderate Choice"}
+              </span>
+              {feedback.timeMultiplier !== 1.0 && (
+                <span className="subtext">Time effect: {feedback.timeMultiplier}×</span>
+              )}
+            </div>
+            <p className="feedback-modal-label">{feedback.label}</p>
+            <div className="feedback-modal-changes">
+              {[
+                { key: "waste",          label: "Waste Generation", invertGood: true  },
+                { key: "resources",      label: "Resource Usage",   invertGood: true  },
+                { key: "cost",           label: "Financial Cost",   invertGood: true  },
+                { key: "sustainability", label: "Sustainability",    invertGood: false },
+              ].map(({ key, label, invertGood }) => {
+                const v = feedback.changes[key];
+                if (v === 0) return null;
+                const good = invertGood ? v < 0 : v > 0;
+                return (
+                  <div key={key} className={`feedback-row ${good ? "good" : "bad"}`}>
+                    <span className="feedback-row-label">{label}</span>
+                    <span className="feedback-row-value">{v > 0 ? "+" : ""}{v}</span>
+                  </div>
+                );
+              })}
+              {feedback.streakBonus > 0 && (
+                <div className="feedback-row good">
+                  <span className="feedback-row-label">🔥 Streak Bonus</span>
+                  <span className="feedback-row-value">+{feedback.streakBonus}</span>
+                </div>
+              )}
+            </div>
+            {levelComplete && (
+              <p className="feedback-complete-msg">🎉 Level complete! +10 hints awarded!</p>
+            )}
+            <div className="modal-actions">
+              <button
+                className="primary-btn"
+                onClick={() => {
+                  setShowFeedbackModal(false);
+                  if (levelComplete) {
+                    navigate("summary", { level, result: progress });
+                  }
+                }}
+              >
+                {levelComplete ? "See Results →" : "Continue →"}
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -382,6 +533,7 @@ function PlayView({ user, level, navigate, onUpdate }) {
                 disabled={choosing}
                 revealed={revealed}
                 chosen={revealed && idx === chosenShuffledIdx}
+                hinted={!revealed && hintIdx === idx}
               />
             ))}
           </div>
@@ -400,6 +552,21 @@ function PlayView({ user, level, navigate, onUpdate }) {
         <button className="ghost-btn" onClick={() => navigate("history", { level })}>Decision History</button>
         <button className="danger-ghost-btn" onClick={() => setShowReset(true)}>Reset Level</button>
       </div>
+
+      {/* Hint Modal */}
+      {showHint && hintIdx !== null && (
+        <div className="modal-overlay" onClick={() => setShowHint(false)}>
+          <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+            <h3>💡 Hint</h3>
+            <p>The best option for this turn is:</p>
+            <p className="hint-option-label"><strong>Option {hintIdx + 1}: {shuffledOptions[hintIdx]?.label}</strong></p>
+            <p className="subtext">This choice has the most positive impact on your sustainability score. You have <strong>{hints}</strong> hint{hints !== 1 ? "s" : ""} remaining.</p>
+            <div className="modal-actions">
+              <button className="primary-btn" onClick={() => setShowHint(false)}>Got it!</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Reset Modal */}
       {showReset && (
