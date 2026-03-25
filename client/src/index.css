@@ -4,7 +4,7 @@
 
 body {
   font-family: 'DM Sans', system-ui, sans-serif;
-  background: #0a0a0a;
+  background-color: #080c18;
   color: #e8e8e8;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -53,7 +53,7 @@ h1, h2, h3, h4, p { margin-top: 0; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── AUTH PAGE ── */
-.auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--bg); }
+.auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; background: transparent; }
 
 .auth-card { width: 100%; max-width: 480px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 2.5rem; box-shadow: 0 8px 40px rgba(0,0,0,0.5); }
 
@@ -396,4 +396,284 @@ h1, h2, h3, h4, p { margin-top: 0; }
   .top-bar-nav { width: 100%; justify-content: space-between; }
   .game-header { flex-direction: column; align-items: flex-start; }
   .metric-row { grid-template-columns: 1fr; }
+}
+
+/* ── VOLUME CONTROL ── */
+.vol-wrap { position: relative; }
+
+.vol-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 1.1rem;
+  padding: 0.35rem 0.6rem;
+  line-height: 1;
+  transition: border-color 0.2s, background 0.2s;
+}
+.vol-btn:hover { border-color: var(--blue); background: var(--surface); }
+
+.vol-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 230px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.vol-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.1rem;
+}
+
+.vol-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.vol-label {
+  font-size: 0.82rem;
+  color: var(--text);
+  white-space: nowrap;
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.vol-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--border);
+  outline: none;
+  cursor: pointer;
+}
+.vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.vol-slider::-webkit-slider-thumb:hover { transform: scale(1.25); }
+.vol-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--blue);
+  cursor: pointer;
+  border: none;
+}
+
+.vol-pct {
+  font-size: 0.75rem;
+  color: var(--muted);
+  width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ── SCENE BACKGROUNDS ───────────────────────────────────────
+   The background is applied directly to <body> via a class
+   toggled by React. This avoids stacking-context issues with
+   max-width containers and ::before pseudo-elements.
+   ──────────────────────────────────────────────────────────── */
+
+/* 1. The fixed background layer — sits behind everything */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: url("/backgrounds/bg-home.svg");
+  opacity: 1;
+  pointer-events: none;
+}
+
+/* 2. Dark overlay on top of the background, behind page content */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: rgba(8, 12, 24, 0.62);
+  pointer-events: none;
+}
+
+/* 3. Scene-specific backgrounds via body class */
+body.scene-home::before      { background-image: url("/backgrounds/bg-home.svg");      background-color: #080c18; }
+body.scene-household::before { background-image: url("/backgrounds/bg-household.svg"); background-color: #10180a; }
+body.scene-city::before      { background-image: url("/backgrounds/bg-city.svg");      background-color: #060c1a; }
+body.scene-country::before   { background-image: url("/backgrounds/bg-country.svg");   background-color: #040608; }
+
+/* 4. All page content must sit above the background layers */
+.auth-page,
+.game-page {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HERO BANNER ─────────────────────────────────────────────── */
+.hero-banner {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  min-height: 180px;
+  position: relative;
+}
+
+/* Left: SVG art pane */
+.hero-art {
+  flex: 0 0 auto;
+  width: 300px;
+  background: #060c18;
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Orbit dot animation */
+@keyframes orbit {
+  from { transform: rotate(0deg)   translateX(78px) rotate(0deg);   }
+  to   { transform: rotate(360deg) translateX(78px) rotate(-360deg);}
+}
+.orbit-dot {
+  transform-origin: 130px 96px;
+  animation: orbit 8s linear infinite;
+}
+
+/* Floating leaves */
+@keyframes floatA {
+  0%,100% { transform: translateY(0px)   rotate(0deg);  }
+  50%      { transform: translateY(-10px) rotate(8deg);  }
+}
+@keyframes floatB {
+  0%,100% { transform: translateY(0px)  rotate(0deg);   }
+  50%      { transform: translateY(-8px) rotate(-6deg);  }
+}
+@keyframes floatC {
+  0%,100% { transform: translateY(0px)  rotate(0deg);   }
+  50%      { transform: translateY(-6px) rotate(10deg);  }
+}
+.float-leaf1 { animation: floatA 4s ease-in-out infinite; }
+.float-leaf2 { animation: floatB 5s ease-in-out infinite 0.8s; }
+.float-leaf3 { animation: floatC 3.5s ease-in-out infinite 1.5s; }
+
+/* Recycle spin */
+@keyframes spin-slow {
+  from { transform: translate(360px, 88px) rotate(0deg);   }
+  to   { transform: translate(360px, 88px) rotate(360deg); }
+}
+
+/* Right: text + stats */
+.hero-content {
+  flex: 1;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.hero-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--blue);
+  opacity: 0.8;
+}
+
+.hero-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #fff;
+  margin: 0;
+}
+
+.hero-name {
+  color: var(--blue);
+}
+
+.hero-sub {
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.hero-stats-row {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+  flex-wrap: wrap;
+}
+
+.hero-stat-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 1rem;
+  min-width: 72px;
+}
+
+.hsp-num {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--blue);
+  font-family: var(--mono);
+  line-height: 1.2;
+}
+
+.hsp-label {
+  font-size: 0.68rem;
+  color: var(--dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 640px) {
+  .hero-banner { flex-direction: column; }
+  .hero-art { width: 100%; height: 140px; border-right: none; border-bottom: 1px solid var(--border); }
+  .hero-content { padding: 1rem; }
+  .hero-title { font-size: 1.25rem; }
 }

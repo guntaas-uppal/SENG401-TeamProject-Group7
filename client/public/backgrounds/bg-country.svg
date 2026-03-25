@@ -1,0 +1,251 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3840 2160" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="ocean-depth" cx="50%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#0e2a48"/>
+      <stop offset="100%" stop-color="#06121e"/>
+    </radialGradient>
+    <radialGradient id="country-glow" cx="50%" cy="50%" r="60%">
+      <stop offset="0%" stop-color="#22c55e" stop-opacity=".08"/>
+      <stop offset="100%" stop-color="#22c55e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Deep ocean -->
+  <rect width="3840" height="2160" fill="url(#ocean-depth)"/>
+
+  <!-- Ocean grid (lat/long lines) -->
+  <line x1="0" y1="432"  x2="3840" y2="432"  stroke="#0e2844" stroke-width="2" opacity=".5"/>
+  <line x1="0" y1="864"  x2="3840" y2="864"  stroke="#0e2844" stroke-width="2" opacity=".5"/>
+  <line x1="0" y1="1296" x2="3840" y2="1296" stroke="#0e2844" stroke-width="2" opacity=".5"/>
+  <line x1="0" y1="1728" x2="3840" y2="1728" stroke="#0e2844" stroke-width="2" opacity=".5"/>
+  <line x1="768"  y1="0" x2="768"  y2="2160" stroke="#0e2844" stroke-width="2" opacity=".35"/>
+  <line x1="1536" y1="0" x2="1536" y2="2160" stroke="#0e2844" stroke-width="2" opacity=".35"/>
+  <line x1="2304" y1="0" x2="2304" y2="2160" stroke="#0e2844" stroke-width="2" opacity=".35"/>
+  <line x1="3072" y1="0" x2="3072" y2="2160" stroke="#0e2844" stroke-width="2" opacity=".35"/>
+  <!-- Diagonal ocean swell lines -->
+  <path d="M0 600 Q960 540 1920 580 Q2880 620 3840 560" fill="none" stroke="#0e2844" stroke-width="1.5" opacity=".3"/>
+  <path d="M0 900 Q960 840 1920 880 Q2880 920 3840 860" fill="none" stroke="#0e2844" stroke-width="1.5" opacity=".3"/>
+  <path d="M0 1200 Q960 1140 1920 1180 Q2880 1220 3840 1160" fill="none" stroke="#0e2844" stroke-width="1.5" opacity=".3"/>
+  <path d="M0 1500 Q960 1440 1920 1480 Q2880 1520 3840 1460" fill="none" stroke="#0e2844" stroke-width="1.5" opacity=".3"/>
+
+  <!-- ═══════════════════════════════════════════════════
+       NORTH ISLAND — NZ shape, larger, top-right of centre
+       ═══════════════════════════════════════════════════ -->
+
+  <!-- Outer glow -->
+  <path d="M2100 260 Q2300 200 2500 240 Q2700 210 2860 280 Q3000 330 3020 440 Q3060 520 3040 620 Q3080 700 3050 800 Q3080 880 3040 970 Q3070 1060 3020 1140 Q3060 1220 2990 1290 Q2960 1360 2880 1400 Q2820 1440 2740 1450 Q2700 1520 2620 1550 Q2560 1600 2480 1590 Q2420 1640 2340 1620 Q2280 1660 2200 1640 Q2140 1680 2060 1650 Q1980 1690 1900 1660 Q1820 1700 1760 1660 Q1680 1640 1640 1580 Q1580 1540 1560 1460 Q1500 1420 1480 1340 Q1440 1280 1460 1200 Q1420 1140 1440 1060 Q1400 1000 1420 920 Q1380 850 1400 770 Q1360 690 1390 610 Q1360 530 1400 460 Q1430 380 1500 330 Q1560 270 1650 240 Q1750 200 1860 220 Q1960 200 2060 230 Q2080 244 2100 260Z"
+        fill="#22c55e" opacity=".06"/>
+
+  <!-- North Island fill -->
+  <path d="M2120 280 Q2300 225 2490 262 Q2680 228 2840 295 Q2970 342 2990 448 Q3030 524 3010 618 Q3048 694 3018 786 Q3046 862 3008 948 Q3036 1032 2988 1108 Q3024 1185 2958 1252 Q2930 1318 2852 1356 Q2794 1394 2716 1404 Q2678 1470 2600 1498 Q2544 1546 2466 1536 Q2408 1584 2330 1564 Q2272 1602 2194 1582 Q2136 1620 2058 1592 Q1982 1630 1904 1602 Q1828 1640 1772 1602 Q1696 1582 1658 1522 Q1600 1482 1582 1404 Q1524 1364 1506 1286 Q1468 1226 1490 1148 Q1452 1088 1474 1008 Q1436 942 1458 862 Q1420 790 1452 714 Q1422 634 1462 566 Q1430 486 1472 420 Q1502 344 1570 296 Q1628 240 1714 216 Q1810 178 1916 198 Q2012 178 2110 208 Q2116 244 2120 280Z"
+        fill="#1c3a2a"/>
+
+  <!-- North Island inner texture (lighter hills) -->
+  <path d="M2120 280 Q2300 225 2490 262 Q2680 228 2840 295 Q2970 342 2990 448 Q3030 524 3010 618 Q3048 694 3018 786 Q3046 862 3008 948 Q3036 1032 2988 1108 Q3024 1185 2958 1252 Q2930 1318 2852 1356 Q2794 1394 2716 1404 Q2678 1470 2600 1498 Q2544 1546 2466 1536 Q2408 1584 2330 1564 Q2272 1602 2194 1582 Q2136 1620 2058 1592 Q1982 1630 1904 1602 Q1828 1640 1772 1602 Q1696 1582 1658 1522 Q1600 1482 1582 1404 Q1524 1364 1506 1286 Q1468 1226 1490 1148 Q1452 1088 1474 1008 Q1436 942 1458 862 Q1420 790 1452 714 Q1422 634 1462 566 Q1430 486 1472 420 Q1502 344 1570 296 Q1628 240 1714 216 Q1810 178 1916 198 Q2012 178 2110 208 Q2116 244 2120 280Z"
+        fill="none" stroke="#2a5a3a" stroke-width="3" opacity=".4"/>
+
+  <!-- North Island — mountains (central volcanic plateau) -->
+  <polygon points="2200,700 2240,630 2280,700" fill="#2a5040" opacity=".8"/>
+  <polygon points="2240,695 2290,610 2340,695" fill="#2a5040" opacity=".85"/>
+  <polygon points="2290,700 2350,605 2410,700" fill="#2a5040" opacity=".8"/>
+  <polygon points="2350,695 2420,598 2490,695" fill="#2a5040" opacity=".82"/>
+  <polygon points="2430,700 2490,610 2550,700" fill="#2a5040" opacity=".78"/>
+  <!-- Snow caps (volcanoes) -->
+  <polygon points="2240,630 2228,652 2252,652" fill="#e8f5fc" opacity=".7"/>
+  <polygon points="2290,610 2276,635 2304,635" fill="#e8f5fc" opacity=".72"/>
+  <polygon points="2350,605 2335,630 2365,630" fill="#e8f5fc" opacity=".75"/>
+  <polygon points="2420,598 2404,624 2436,624" fill="#e8f5fc" opacity=".72"/>
+  <polygon points="2490,610 2476,635 2504,635" fill="#e8f5fc" opacity=".68"/>
+
+  <!-- North Island — eastern ranges -->
+  <polygon points="2700,500 2730,450 2760,500" fill="#2a5040" opacity=".7"/>
+  <polygon points="2740,504 2778,442 2816,504" fill="#2a5040" opacity=".75"/>
+  <polygon points="2790,500 2832,436 2874,500" fill="#2a5040" opacity=".7"/>
+  <polygon points="2778,442 2764,464 2792,464" fill="#d8eef5" opacity=".55"/>
+  <polygon points="2832,436 2818,460 2846,460" fill="#d8eef5" opacity=".55"/>
+
+  <!-- North Island main river -->
+  <path d="M2360 630 Q2340 700 2360 780 Q2375 850 2350 930 Q2330 1000 2355 1080 Q2372 1150 2340 1220 Q2315 1290 2345 1360 Q2360 1420 2340 1490"
+        fill="none" stroke="#1a5878" stroke-width="6" opacity=".65" stroke-linecap="round"/>
+  <path d="M2360 630 Q2340 700 2360 780 Q2375 850 2350 930 Q2330 1000 2355 1080 Q2372 1150 2340 1220 Q2315 1290 2345 1360 Q2360 1420 2340 1490"
+        fill="none" stroke="#4ab0d0" stroke-width="3" opacity=".45" stroke-linecap="round"/>
+  <!-- Tributary west -->
+  <path d="M1760 920 Q1850 940 1940 930 Q2040 920 2120 940 Q2220 955 2310 948 Q2340 946 2360 930"
+        fill="none" stroke="#1a5878" stroke-width="4" opacity=".55" stroke-linecap="round"/>
+  <path d="M1760 920 Q1850 940 1940 930 Q2040 920 2120 940 Q2220 955 2310 948 Q2340 946 2360 930"
+        fill="none" stroke="#4ab0d0" stroke-width="2" opacity=".35"/>
+  <!-- Lake Taupo equivalent (central lake) -->
+  <ellipse cx="2370" cy="820" rx="120" ry="75" fill="#1a5878" opacity=".75"/>
+  <ellipse cx="2370" cy="820" rx="120" ry="75" fill="none" stroke="#2a90c0" stroke-width="3" opacity=".5"/>
+  <ellipse cx="2368" cy="818" rx="55"  ry="35" fill="#2060a0" opacity=".4"/>
+
+  <!-- North Island roads -->
+  <path d="M1582 1400 Q1700 1380 1820 1360 Q1960 1340 2100 1350 Q2220 1356 2360 1340 Q2500 1326 2640 1340 Q2760 1352 2880 1350 Q2958 1348 2988 1340"
+        fill="none" stroke="#2a4030" stroke-width="6" opacity=".55"/>
+  <path d="M1582 1400 Q1700 1380 1820 1360 Q1960 1340 2100 1350 Q2220 1356 2360 1340 Q2500 1326 2640 1340 Q2760 1352 2880 1350 Q2958 1348 2988 1340"
+        fill="none" stroke="#3a6040" stroke-width="3" stroke-dasharray="28 14" opacity=".45"/>
+  <!-- Vertical highway -->
+  <path d="M2280 290 Q2270 500 2280 720 Q2288 900 2270 1060 Q2256 1200 2270 1360 Q2280 1480 2260 1590"
+        fill="none" stroke="#2a4030" stroke-width="5" opacity=".5"/>
+  <path d="M2280 290 Q2270 500 2280 720 Q2288 900 2270 1060 Q2256 1200 2270 1360 Q2280 1480 2260 1590"
+        fill="none" stroke="#3a6040" stroke-width="2.5" stroke-dasharray="24 12" opacity=".4"/>
+
+  <!-- North Island cities -->
+  <!-- Auckland equivalent (largest, north) -->
+  <circle cx="2440" cy="380" r="28" fill="#1a3a28" stroke="#4ade80" stroke-width="5" opacity=".92"/>
+  <circle cx="2440" cy="380" r="14" fill="#4ade80" opacity=".75"/>
+  <circle cx="2440" cy="380" r="45" fill="none" stroke="#4ade80" stroke-width="2.5" stroke-dasharray="8 6" opacity=".45"/>
+  <circle cx="2440" cy="380" r="65" fill="#4ade80" opacity=".05"/>
+  <!-- Capital (Wellington equiv, south) -->
+  <circle cx="2250" cy="1480" r="24" fill="#1a3a28" stroke="#4ade80" stroke-width="4.5" opacity=".9"/>
+  <circle cx="2250" cy="1480" r="12" fill="#4ade80" opacity=".72"/>
+  <circle cx="2250" cy="1480" r="38" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="6 5" opacity=".4"/>
+  <!-- Major cities -->
+  <circle cx="2700" cy="680" r="18" fill="#1a3a28" stroke="#86efac" stroke-width="4" opacity=".85"/>
+  <circle cx="2700" cy="680" r="9"  fill="#86efac" opacity=".7"/>
+  <circle cx="1800" cy="1100" r="18" fill="#1a3a28" stroke="#86efac" stroke-width="4" opacity=".85"/>
+  <circle cx="1800" cy="1100" r="9"  fill="#86efac" opacity=".7"/>
+  <circle cx="2580" cy="1200" r="18" fill="#1a3a28" stroke="#86efac" stroke-width="4" opacity=".85"/>
+  <circle cx="2580" cy="1200" r="9"  fill="#86efac" opacity=".7"/>
+  <!-- Minor towns -->
+  <circle cx="2900" cy="900" r="11" fill="#2a5a38" stroke="#6ad090" stroke-width="2.5" opacity=".75"/>
+  <circle cx="2900" cy="900" r="5"  fill="#6ad090" opacity=".65"/>
+  <circle cx="2100" cy="500" r="11" fill="#2a5a38" stroke="#6ad090" stroke-width="2.5" opacity=".75"/>
+  <circle cx="2100" cy="500" r="5"  fill="#6ad090" opacity=".65"/>
+  <circle cx="1680" cy="720" r="11" fill="#2a5a38" stroke="#6ad090" stroke-width="2.5" opacity=".75"/>
+  <circle cx="1680" cy="720" r="5"  fill="#6ad090" opacity=".65"/>
+  <circle cx="2800" cy="1350" r="11" fill="#2a5a38" stroke="#6ad090" stroke-width="2.5" opacity=".75"/>
+  <circle cx="2800" cy="1350" r="5"  fill="#6ad090" opacity=".65"/>
+
+  <!-- North Island border (bright dashed) -->
+  <path d="M2120 280 Q2300 225 2490 262 Q2680 228 2840 295 Q2970 342 2990 448 Q3030 524 3010 618 Q3048 694 3018 786 Q3046 862 3008 948 Q3036 1032 2988 1108 Q3024 1185 2958 1252 Q2930 1318 2852 1356 Q2794 1394 2716 1404 Q2678 1470 2600 1498 Q2544 1546 2466 1536 Q2408 1584 2330 1564 Q2272 1602 2194 1582 Q2136 1620 2058 1592 Q1982 1630 1904 1602 Q1828 1640 1772 1602 Q1696 1582 1658 1522 Q1600 1482 1582 1404 Q1524 1364 1506 1286 Q1468 1226 1490 1148 Q1452 1088 1474 1008 Q1436 942 1458 862 Q1420 790 1452 714 Q1422 634 1462 566 Q1430 486 1472 420 Q1502 344 1570 296 Q1628 240 1714 216 Q1810 178 1916 198 Q2012 178 2110 208 Q2116 244 2120 280Z"
+        fill="none" stroke="#4ade80" stroke-width="5" stroke-dasharray="20 10" opacity=".75"/>
+  <path d="M2120 280 Q2300 225 2490 262 Q2680 228 2840 295 Q2970 342 2990 448 Q3030 524 3010 618 Q3048 694 3018 786 Q3046 862 3008 948 Q3036 1032 2988 1108 Q3024 1185 2958 1252 Q2930 1318 2852 1356 Q2794 1394 2716 1404 Q2678 1470 2600 1498 Q2544 1546 2466 1536 Q2408 1584 2330 1564 Q2272 1602 2194 1582 Q2136 1620 2058 1592 Q1982 1630 1904 1602 Q1828 1640 1772 1602 Q1696 1582 1658 1522 Q1600 1482 1582 1404 Q1524 1364 1506 1286 Q1468 1226 1490 1148 Q1452 1088 1474 1008 Q1436 942 1458 862 Q1420 790 1452 714 Q1422 634 1462 566 Q1430 486 1472 420 Q1502 344 1570 296 Q1628 240 1714 216 Q1810 178 1916 198 Q2012 178 2110 208 Q2116 244 2120 280Z"
+        fill="none" stroke="#86efac" stroke-width="2" opacity=".4"/>
+
+  <!-- ═══════════════════════════════════════════════════
+       SOUTH ISLAND — elongated, NW–SE, more mountainous
+       ═══════════════════════════════════════════════════ -->
+
+  <!-- South Island glow -->
+  <path d="M680 1100 Q760 1040 900 1010 Q1040 960 1160 970 Q1280 950 1380 990 Q1480 960 1560 1010 Q1640 980 1700 1040 Q1760 1000 1800 1070 Q1840 1040 1860 1120 Q1900 1080 1900 1160 Q1940 1130 1930 1220 Q1970 1200 1950 1290 Q1980 1280 1960 1370 Q1980 1370 1956 1460 Q1980 1466 1950 1556 Q1972 1570 1936 1656 Q1956 1676 1912 1758 Q1928 1786 1876 1860 Q1888 1896 1828 1960 Q1836 2004 1764 2058 Q1764 2108 1680 2150 Q1700 2160 1620 2160 L1500 2160 Q1460 2130 1420 2100 Q1380 2060 1340 2010 Q1290 1970 1260 1910 Q1200 1870 1180 1800 Q1120 1760 1108 1688 Q1040 1656 1040 1578 Q972 1548 982 1466 Q912 1438 932 1354 Q856 1328 886 1242 Q806 1218 844 1130 Q764 1108 808 1030 Q728 1014 768 936 Q700 930 736 856 Q664 860 692 780 Q620 792 644 714 Q572 734 590 654 Q516 680 528 596 Q452 626 458 536 Q382 568 382 476 Q306 510 300 416 Q224 450 212 354 Q136 388 124 290 Q48 320 30 220 Q-20 240 0 136 L0 2160 L1620 2160 Q1660 2130 1700 2094 Q1740 2054 1772 2010 Q1812 1968 1836 1916 Q1876 1876 1892 1816 Q1940 1776 1950 1704 Q2000 1660 2002 1582 Q2048 1530 2040 1450 Q2082 1394 2066 1310 Q2102 1248 2078 1164 Q2108 1100 2076 1020 Q2100 956 2060 886 Q2076 826 2028 762 Q2036 706 1980 652 Q1980 598 1916 552 Q1908 498 1836 462 Q1820 406 1740 378 Q1716 322 1628 302 Q1596 246 1500 234 Q1460 178 1356 174 Q1308 118 1196 122 Q1140 68 1020 78 Q956 24 828 40 Q756 -10 622 14 Q542 -30 408 2 Q320 -38 182 2 Q96 -32 0 20 L0 136 Q40 110 80 130 Q110 106 150 128 Q180 102 220 126 Q248 98 290 124 Q316 96 358 122 Q384 94 426 122 Q452 92 496 120 Q520 90 566 118 Q590 88 638 116 Q660 84 710 112 Q732 80 784 108 Q804 74 858 104 Q876 68 932 100 Q948 62 1006 96 Q1020 56 1080 92 Q1092 50 1154 88 Q1164 44 1228 84 Q1236 38 1302 80 Q1308 32 1376 76 Q1380 26 1450 72 Q1452 20 1524 68 Q1524 14 1598 64 Q1596 8 1672 60 Q1668 2 1746 56 Q1740 -4 1820 50 Q1812 -8 1894 46 Q1884 -12 1966 42 Q1956 -16 2038 38 Q2026 -20 2110 32 L2120 280" fill="#1c3a2a" opacity=".0"/>
+
+  <!-- South Island fill — elongated NZ south shape -->
+  <path d="M760 1080 Q860 1020 1000 990 Q1140 950 1260 960 Q1380 940 1480 980 Q1570 950 1640 1000 Q1710 970 1760 1030 Q1810 998 1840 1068 Q1874 1040 1876 1120 Q1910 1094 1904 1174 Q1938 1154 1926 1244 Q1958 1230 1940 1322 Q1968 1316 1944 1408 Q1966 1412 1938 1506 Q1958 1518 1924 1610 Q1942 1628 1900 1712 Q1916 1740 1866 1816 Q1878 1848 1818 1914 Q1826 1958 1754 2016 Q1752 2070 1664 2118 Q1560 2160 1440 2160 Q1350 2118 1310 2070 Q1256 2030 1228 1968 Q1168 1926 1148 1852 Q1086 1810 1076 1734 Q1006 1700 1008 1618 Q938 1586 950 1500 Q878 1470 900 1382 Q822 1352 854 1262 Q772 1232 812 1140 Q728 1112 774 1014 Q736 1000 760 1080Z"
+        fill="#1c3a2a"/>
+
+  <!-- South Island inner texture -->
+  <path d="M760 1080 Q860 1020 1000 990 Q1140 950 1260 960 Q1380 940 1480 980 Q1570 950 1640 1000 Q1710 970 1760 1030 Q1810 998 1840 1068 Q1874 1040 1876 1120 Q1910 1094 1904 1174 Q1938 1154 1926 1244 Q1958 1230 1940 1322 Q1968 1316 1944 1408 Q1966 1412 1938 1506 Q1958 1518 1924 1610 Q1942 1628 1900 1712 Q1916 1740 1866 1816 Q1878 1848 1818 1914 Q1826 1958 1754 2016 Q1752 2070 1664 2118 Q1560 2160 1440 2160 Q1350 2118 1310 2070 Q1256 2030 1228 1968 Q1168 1926 1148 1852 Q1086 1810 1076 1734 Q1006 1700 1008 1618 Q938 1586 950 1500 Q878 1470 900 1382 Q822 1352 854 1262 Q772 1232 812 1140 Q728 1112 774 1014 Q736 1000 760 1080Z"
+        fill="none" stroke="#2a5a3a" stroke-width="3" opacity=".4"/>
+
+  <!-- South Island — Southern Alps (dominant mountain range, spine of island) -->
+  <polygon points="980,1120 1010,1050 1040,1120"  fill="#2a5040" opacity=".82"/>
+  <polygon points="1020,1118 1060,1038 1100,1118" fill="#2a5040" opacity=".88"/>
+  <polygon points="1068,1112 1115,1026 1162,1112" fill="#2a5040" opacity=".85"/>
+  <polygon points="1120,1108 1175,1018 1230,1108" fill="#2a5040" opacity=".88"/>
+  <polygon points="1180,1110 1240,1014 1300,1110" fill="#2a5040" opacity=".85"/>
+  <polygon points="1248,1112 1312,1010 1376,1112" fill="#2a5040" opacity=".82"/>
+  <polygon points="1320,1115 1388,1008 1456,1115" fill="#2a5040" opacity=".85"/>
+  <polygon points="1400,1118 1466,1006 1532,1118" fill="#2a5040" opacity=".82"/>
+  <polygon points="1475,1122 1540,1010 1605,1122" fill="#2a5040" opacity=".78"/>
+  <polygon points="1548,1128 1610,1018 1672,1128" fill="#2a5040" opacity=".75"/>
+  <!-- Snow caps — Southern Alps (prominent) -->
+  <polygon points="1010,1050 998,1074 1022,1074"  fill="#e8f8ff" opacity=".78"/>
+  <polygon points="1060,1038 1046,1064 1074,1064" fill="#e8f8ff" opacity=".82"/>
+  <polygon points="1115,1026 1099,1054 1131,1054" fill="#e8f8ff" opacity=".85"/>
+  <polygon points="1175,1018 1158,1048 1192,1048" fill="#e8f8ff" opacity=".88"/>
+  <polygon points="1240,1014 1222,1046 1258,1046" fill="#e8f8ff" opacity=".88"/>
+  <polygon points="1312,1010 1294,1042 1330,1042" fill="#e8f8ff" opacity=".85"/>
+  <polygon points="1388,1008 1370,1042 1406,1042" fill="#e8f8ff" opacity=".82"/>
+  <polygon points="1466,1006 1448,1040 1484,1040" fill="#e8f8ff" opacity=".78"/>
+  <polygon points="1540,1010 1524,1042 1556,1042" fill="#e8f8ff" opacity=".72"/>
+  <polygon points="1610,1018 1595,1048 1625,1048" fill="#e8f8ff" opacity=".65"/>
+
+  <!-- South Island glacial lake -->
+  <ellipse cx="1380" cy="1380" rx="95" ry="55" fill="#1a5878" opacity=".8"/>
+  <ellipse cx="1380" cy="1380" rx="95" ry="55" fill="none" stroke="#2a90c0" stroke-width="3" opacity=".6"/>
+
+  <!-- South Island river (West Coast) -->
+  <path d="M1220 1060 Q1200 1150 1220 1240 Q1235 1320 1210 1400 Q1188 1480 1212 1560 Q1228 1640 1200 1720 Q1178 1800 1200 1880 Q1212 1950 1185 2040"
+        fill="none" stroke="#1a5878" stroke-width="5" opacity=".6" stroke-linecap="round"/>
+  <path d="M1220 1060 Q1200 1150 1220 1240 Q1235 1320 1210 1400 Q1188 1480 1212 1560 Q1228 1640 1200 1720 Q1178 1800 1200 1880 Q1212 1950 1185 2040"
+        fill="none" stroke="#4ab0d0" stroke-width="2.5" opacity=".4" stroke-linecap="round"/>
+
+  <!-- South Island roads -->
+  <path d="M900 1380 Q1000 1360 1100 1368 Q1200 1374 1380 1368 Q1540 1362 1680 1376 Q1780 1386 1870 1380"
+        fill="none" stroke="#2a4030" stroke-width="5" opacity=".5"/>
+  <path d="M900 1380 Q1000 1360 1100 1368 Q1200 1374 1380 1368 Q1540 1362 1680 1376 Q1780 1386 1870 1380"
+        fill="none" stroke="#3a6040" stroke-width="2.5" stroke-dasharray="22 11" opacity=".4"/>
+
+  <!-- South Island cities -->
+  <circle cx="1460" cy="1280" r="22" fill="#1a3a28" stroke="#4ade80" stroke-width="4.5" opacity=".9"/>
+  <circle cx="1460" cy="1280" r="11" fill="#4ade80" opacity=".72"/>
+  <circle cx="1460" cy="1280" r="36" fill="none" stroke="#4ade80" stroke-width="2" stroke-dasharray="6 5" opacity=".38"/>
+  <circle cx="900"  cy="1500" r="18" fill="#1a3a28" stroke="#86efac" stroke-width="3.5" opacity=".85"/>
+  <circle cx="900"  cy="1500" r="9"  fill="#86efac" opacity=".7"/>
+  <circle cx="1680" cy="1700" r="18" fill="#1a3a28" stroke="#86efac" stroke-width="3.5" opacity=".85"/>
+  <circle cx="1680" cy="1700" r="9"  fill="#86efac" opacity=".7"/>
+  <circle cx="1200" cy="1850" r="14" fill="#2a5a38" stroke="#6ad090" stroke-width="2.5" opacity=".75"/>
+  <circle cx="1200" cy="1850" r="7"  fill="#6ad090" opacity=".65"/>
+
+  <!-- South Island border -->
+  <path d="M760 1080 Q860 1020 1000 990 Q1140 950 1260 960 Q1380 940 1480 980 Q1570 950 1640 1000 Q1710 970 1760 1030 Q1810 998 1840 1068 Q1874 1040 1876 1120 Q1910 1094 1904 1174 Q1938 1154 1926 1244 Q1958 1230 1940 1322 Q1968 1316 1944 1408 Q1966 1412 1938 1506 Q1958 1518 1924 1610 Q1942 1628 1900 1712 Q1916 1740 1866 1816 Q1878 1848 1818 1914 Q1826 1958 1754 2016 Q1752 2070 1664 2118 Q1560 2160 1440 2160 Q1350 2118 1310 2070 Q1256 2030 1228 1968 Q1168 1926 1148 1852 Q1086 1810 1076 1734 Q1006 1700 1008 1618 Q938 1586 950 1500 Q878 1470 900 1382 Q822 1352 854 1262 Q772 1232 812 1140 Q728 1112 774 1014 Q736 1000 760 1080Z"
+        fill="none" stroke="#4ade80" stroke-width="5" stroke-dasharray="18 9" opacity=".72"/>
+  <path d="M760 1080 Q860 1020 1000 990 Q1140 950 1260 960 Q1380 940 1480 980 Q1570 950 1640 1000 Q1710 970 1760 1030 Q1810 998 1840 1068 Q1874 1040 1876 1120 Q1910 1094 1904 1174 Q1938 1154 1926 1244 Q1958 1230 1940 1322 Q1968 1316 1944 1408 Q1966 1412 1938 1506 Q1958 1518 1924 1610 Q1942 1628 1900 1712 Q1916 1740 1866 1816 Q1878 1848 1818 1914 Q1826 1958 1754 2016 Q1752 2070 1664 2118 Q1560 2160 1440 2160 Q1350 2118 1310 2070 Q1256 2030 1228 1968 Q1168 1926 1148 1852 Q1086 1810 1076 1734 Q1006 1700 1008 1618 Q938 1586 950 1500 Q878 1470 900 1382 Q822 1352 854 1262 Q772 1232 812 1140 Q728 1112 774 1014 Q736 1000 760 1080Z"
+        fill="none" stroke="#86efac" stroke-width="2" opacity=".38"/>
+
+  <!-- Country label over North Island -->
+  <text x="2280" y="1220" text-anchor="middle" font-size="52" fill="#86efac" font-family="sans-serif" font-weight="bold" letter-spacing="12" opacity=".8">ECOLAND</text>
+  <!-- North Island label -->
+  <text x="2260" y="720" text-anchor="middle" font-size="32" fill="#4ade80" font-family="sans-serif" font-style="italic" letter-spacing="4" opacity=".55">North Island</text>
+  <!-- South Island label -->
+  <text x="1340" y="1600" text-anchor="middle" font-size="30" fill="#4ade80" font-family="sans-serif" font-style="italic" letter-spacing="4" opacity=".5">South Island</text>
+  <!-- Capital label -->
+  <text x="2250" y="1540" text-anchor="middle" font-size="22" fill="#4ade80" font-family="sans-serif" letter-spacing="2" opacity=".65">&#9733; CAPITAL</text>
+  <!-- Auckland label -->
+  <text x="2440" y="440" text-anchor="middle" font-size="22" fill="#86efac" font-family="sans-serif" letter-spacing="2" opacity=".6">Auckland</text>
+
+  <!-- Strait between islands -->
+  <text x="1960" y="1080" text-anchor="middle" font-size="22" fill="#1e5070" font-family="sans-serif" font-style="italic" letter-spacing="3" opacity=".55">Cook Strait</text>
+
+  <!-- Ocean labels -->
+  <text x="500"  y="600"  text-anchor="middle" font-size="36" fill="#0e3858" font-family="sans-serif" font-style="italic" letter-spacing="6" opacity=".5">TASMAN SEA</text>
+  <text x="3400" y="900"  text-anchor="middle" font-size="34" fill="#0e3858" font-family="sans-serif" font-style="italic" letter-spacing="5" opacity=".5">PACIFIC</text>
+  <text x="3400" y="948"  text-anchor="middle" font-size="34" fill="#0e3858" font-family="sans-serif" font-style="italic" letter-spacing="5" opacity=".5">OCEAN</text>
+  <text x="1920" y="2100" text-anchor="middle" font-size="32" fill="#0e3858" font-family="sans-serif" font-style="italic" letter-spacing="5" opacity=".45">SOUTHERN OCEAN</text>
+
+  <!-- Compass rose -->
+  <g opacity=".4" transform="translate(3500,380)">
+    <circle r="70" fill="none" stroke="#1e4870" stroke-width="3"/>
+    <circle r="50" fill="none" stroke="#1e4870" stroke-width="1.5"/>
+    <line x1="0" y1="-70" x2="0" y2="70" stroke="#2a6090" stroke-width="3"/>
+    <line x1="-70" y1="0" x2="70" y2="0" stroke="#2a6090" stroke-width="3"/>
+    <line x1="-50" y1="-50" x2="50" y2="50" stroke="#1e4870" stroke-width="1.5"/>
+    <line x1="50" y1="-50" x2="-50" y2="50" stroke="#1e4870" stroke-width="1.5"/>
+    <polygon points="0,-70 -14,-24 14,-24" fill="#3a90c0" opacity=".9"/>
+    <polygon points="0,70 -14,24 14,24"  fill="#2a6090" opacity=".6"/>
+    <polygon points="-70,0 -24,-14 -24,14" fill="#2a6090" opacity=".6"/>
+    <polygon points="70,0 24,-14 24,14"  fill="#2a6090" opacity=".6"/>
+    <circle r="12" fill="#1a3050" stroke="#3a90c0" stroke-width="3"/>
+    <text y="-82" text-anchor="middle" font-size="28" fill="#3a90c0" font-family="sans-serif" font-weight="bold">N</text>
+    <text y="100" text-anchor="middle" font-size="22" fill="#2a6090" font-family="sans-serif">S</text>
+    <text x="-90" y="8" text-anchor="middle" font-size="22" fill="#2a6090" font-family="sans-serif">W</text>
+    <text x="90" y="8" text-anchor="middle" font-size="22" fill="#2a6090" font-family="sans-serif">E</text>
+  </g>
+
+  <!-- Scale bar -->
+  <g opacity=".38" transform="translate(240,1960)">
+    <rect x="0" y="0" width="320" height="16" fill="none" stroke="#2a6090" stroke-width="3"/>
+    <rect x="0" y="0" width="160" height="16" fill="#2a6090" opacity=".6"/>
+    <line x1="0"   y1="-8" x2="0"   y2="24" stroke="#2a6090" stroke-width="3"/>
+    <line x1="160" y1="-8" x2="160" y2="24" stroke="#2a6090" stroke-width="3"/>
+    <line x1="320" y1="-8" x2="320" y2="24" stroke="#2a6090" stroke-width="3"/>
+    <text x="160" y="52" text-anchor="middle" font-size="28" fill="#3a90c0" font-family="sans-serif">500 km</text>
+  </g>
+
+  <!-- Depth contour lines around islands (bathymetric) -->
+  <path d="M2020 220 Q2300 160 2540 200 Q2780 168 2960 240 Q3100 295 3118 420 Q3150 500 3128 600 Q3162 688 3132 790 Q3158 870 3118 960 Q3148 1050 3100 1130 Q3136 1218 3070 1296 Q3038 1374 2956 1412 Q2892 1454 2808 1462 Q2768 1534 2684 1562 Q2622 1614 2536 1600 Q2472 1650 2386 1630 Q2320 1670 2234 1648 Q2168 1688 2082 1658 Q2000 1698 1916 1668 Q1834 1706 1772 1668 Q1690 1644 1648 1580 Q1582 1538 1562 1454 Q1500 1408 1478 1324 Q1436 1260 1458 1176 Q1418 1110 1440 1026 Q1400 956 1422 872 Q1382 796 1416 718 Q1382 632 1422 562 Q1448 476 1520 426 Q1578 362 1666 338 Q1766 296 1872 316 Q1974 294 2070 328 Q2076 268 2020 220Z"
+        fill="none" stroke="#0e3050" stroke-width="2" stroke-dasharray="12 8" opacity=".3"/>
+  <path d="M760 1080 Q860 1020 1000 990 Q1140 950 1260 960 Q1380 940 1480 980 Q1570 950 1640 1000 Q1710 970 1760 1030 Q1810 998 1840 1068 Q1874 1040 1876 1120 Q1910 1094 1904 1174 Q1938 1154 1926 1244 Q1958 1230 1940 1322 Q1968 1316 1944 1408 Q1966 1412 1938 1506 Q1958 1518 1924 1610 Q1942 1628 1900 1712 Q1916 1740 1866 1816 Q1878 1848 1818 1914 Q1826 1958 1754 2016 Q1752 2070 1664 2118 Q1560 2160 1440 2160 Q1350 2118 1310 2070 Q1256 2030 1228 1968 Q1168 1926 1148 1852 Q1086 1810 1076 1734 Q1006 1700 1008 1618 Q938 1586 950 1500 Q878 1470 900 1382 Q822 1352 854 1262 Q772 1232 812 1140 Q728 1112 754 1038 Q668 1006 700 930 Q618 914 642 840 Q630 800 660 1080Z"
+        fill="none" stroke="#0e3050" stroke-width="2" stroke-dasharray="12 8" opacity=".28"/>
+</svg>

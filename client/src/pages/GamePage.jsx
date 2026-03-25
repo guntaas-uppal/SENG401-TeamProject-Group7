@@ -1,7 +1,88 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { api } from "../utils/api";
+import { audio } from "../utils/audio";
 import DecisionCard from "../components/DecisionCard";
 import MetricBar from "../components/MetricBar";
+
+/* ============================================================
+   VOLUME CONTROL — dropdown with Music + SFX sliders
+   ============================================================ */
+function VolumeControl() {
+  const [open,     setOpen]     = useState(false);
+  const [musicVol, setMusicVol] = useState(audio.getMusicVol());
+  const [sfxVol,   setSfxVol]   = useState(audio.getSfxVol());
+  const ref = useRef(null);
+
+  // Close when clicking outside
+  useEffect(() => {
+    function onOutside(e) {
+      if (ref.current && !ref.current.contains(e.target)) setOpen(false);
+    }
+    document.addEventListener("mousedown", onOutside);
+    return () => document.removeEventListener("mousedown", onOutside);
+  }, []);
+
+  function handleMusicChange(e) {
+    const v = parseFloat(e.target.value);
+    setMusicVol(v);
+    audio.setMusicVol(v);
+  }
+
+  function handleSfxChange(e) {
+    const v = parseFloat(e.target.value);
+    setSfxVol(v);
+    audio.setSfxVol(v);
+  }
+
+  function icon() {
+    if (musicVol === 0) return "🔇";
+    if (musicVol < 0.4) return "🔈";
+    if (musicVol < 0.75) return "🔉";
+    return "🔊";
+  }
+
+  return (
+    <div className="vol-wrap" ref={ref}>
+      <button
+        className="vol-btn"
+        onClick={() => setOpen((o) => !o)}
+        title="Audio settings"
+        aria-label="Audio settings"
+      >
+        {icon()}
+      </button>
+
+      {open && (
+        <div className="vol-dropdown">
+          <p className="vol-title">Audio</p>
+
+          <div className="vol-row">
+            <span className="vol-label">🎵 Music</span>
+            <input
+              type="range" min="0" max="1" step="0.01"
+              value={musicVol}
+              onChange={handleMusicChange}
+              className="vol-slider"
+            />
+            <span className="vol-pct">{Math.round(musicVol * 100)}%</span>
+          </div>
+
+          <div className="vol-row">
+            <span className="vol-label">🔔 SFX</span>
+            <input
+              type="range" min="0" max="1" step="0.01"
+              value={sfxVol}
+              onChange={handleSfxChange}
+              className="vol-slider"
+            />
+            <span className="vol-pct">{Math.round(sfxVol * 100)}%</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 
 const LEVEL_CONFIG = {
   household: { icon: "🏠", label: "Household", timeUnit: "Day", objective: 50, unlockAt: 25, difficulty: "normal" },
@@ -120,6 +201,7 @@ function GamePage({ user, view, viewProps, navigate, onLogout }) {
       <div className="top-bar-nav">
         <button className={`nav-btn ${view === "dashboard" ? "active" : ""}`} onClick={() => navigate("dashboard")}>Dashboard</button>
         <button className={`nav-btn ${view === "leaderboard" ? "active" : ""}`} onClick={() => navigate("leaderboard")}>Leaderboard</button>
+        <VolumeControl />
         <button className="secondary-btn" onClick={onLogout}>Sign Out</button>
       </div>
     </header>
@@ -172,15 +254,111 @@ function DashboardView({ user, summary, navigate, isUnlocked }) {
 
   return (
     <>
-      <section className="panel hero-panel">
-        <div>
-          <h2>Welcome back, {user.name}</h2>
-          <p className="subtext">Your sustainability journey at a glance</p>
+      <section className="hero-banner">
+        {/* ── Illustrated SVG art panel ── */}
+        <div className="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg" className="hero-svg">
+            {/* Stars */}
+            <circle cx="18"  cy="14"  r="1"   fill="#fff" opacity=".5"/>
+            <circle cx="52"  cy="8"   r=".7"  fill="#fff" opacity=".4"/>
+            <circle cx="85"  cy="22"  r="1.1" fill="#fff" opacity=".6"/>
+            <circle cx="118" cy="10"  r=".8"  fill="#fff" opacity=".5"/>
+            <circle cx="155" cy="18"  r=".7"  fill="#fff" opacity=".4"/>
+            <circle cx="188" cy="6"   r="1"   fill="#fff" opacity=".6"/>
+            <circle cx="220" cy="24"  r=".8"  fill="#fff" opacity=".5"/>
+            <circle cx="255" cy="12"  r="1.2" fill="#fff" opacity=".7"/>
+            <circle cx="290" cy="20"  r=".7"  fill="#fff" opacity=".4"/>
+            <circle cx="325" cy="8"   r=".9"  fill="#fff" opacity=".6"/>
+            <circle cx="360" cy="26"  r=".8"  fill="#fff" opacity=".5"/>
+            <circle cx="395" cy="14"  r=".7"  fill="#fff" opacity=".4"/>
+            <circle cx="428" cy="22"  r="1"   fill="#fff" opacity=".6"/>
+            <circle cx="462" cy="10"  r=".8"  fill="#fff" opacity=".5"/>
+            <circle cx="498" cy="18"  r=".7"  fill="#fff" opacity=".4"/>
+            <circle cx="35"  cy="42"  r=".6"  fill="#fff" opacity=".3"/>
+            <circle cx="78"  cy="52"  r=".8"  fill="#fff" opacity=".4"/>
+            <circle cx="140" cy="38"  r=".7"  fill="#fff" opacity=".35"/>
+            <circle cx="205" cy="48"  r=".6"  fill="#fff" opacity=".3"/>
+            <circle cx="272" cy="36"  r=".9"  fill="#fff" opacity=".45"/>
+            <circle cx="340" cy="50"  r=".7"  fill="#fff" opacity=".35"/>
+            <circle cx="408" cy="40"  r=".6"  fill="#fff" opacity=".3"/>
+            <circle cx="476" cy="54"  r=".8"  fill="#fff" opacity=".4"/>
+
+            {/* Orbit ring */}
+            <ellipse cx="130" cy="96" rx="78" ry="14" fill="none" stroke="#3b82f6" strokeWidth=".8" opacity=".25"/>
+
+            {/* Earth */}
+            <circle cx="130" cy="96" r="52" fill="#0f2a4a"/>
+            {/* Ocean */}
+            <circle cx="130" cy="96" r="52" fill="#1a4a7a" opacity=".7"/>
+            {/* Land masses */}
+            <path d="M108 60 Q118 55 130 58 Q142 54 148 62 Q155 70 150 80 Q158 85 155 95 Q148 105 138 100 Q128 108 118 102 Q108 96 110 85 Q102 75 108 60Z" fill="#1a6632" opacity=".85"/>
+            <path d="M90 88 Q96 80 104 83 Q110 90 106 98 Q100 104 93 98 Q87 92 90 88Z" fill="#1a6632" opacity=".8"/>
+            <path d="M140 110 Q150 106 158 112 Q162 120 156 126 Q148 130 140 124 Q134 118 140 110Z" fill="#1a6632" opacity=".75"/>
+            <path d="M112 72 Q120 68 128 72 Q132 78 126 84 Q118 86 112 80 Q108 76 112 72Z" fill="#2a8844" opacity=".7"/>
+            {/* Ice cap */}
+            <path d="M112 50 Q122 45 130 47 Q138 44 144 50 Q138 56 130 54 Q122 57 112 50Z" fill="#d8eef8" opacity=".5"/>
+            {/* Cloud wisps */}
+            <ellipse cx="148" cy="72" rx="10" ry="4" fill="#c8e0f0" opacity=".35"/>
+            <ellipse cx="112" cy="108" rx="8" ry="3" fill="#c8e0f0" opacity=".3"/>
+            {/* Atmosphere glow */}
+            <circle cx="130" cy="96" r="56" fill="none" stroke="#60a8e8" strokeWidth="3" opacity=".12"/>
+            <circle cx="130" cy="96" r="60" fill="none" stroke="#3b82f6" strokeWidth="1.5" opacity=".07"/>
+
+            {/* Orbit satellite dot */}
+            <circle className="orbit-dot" cx="208" cy="96" r="3.5" fill="#60a8e8" opacity=".7"/>
+
+            {/* Floating leaf 1 */}
+            <path className="float-leaf1" d="M290 60 Q300 50 310 58 Q306 68 295 66 Q288 64 290 60Z" fill="#1a8844" opacity=".7"/>
+            <line className="float-leaf1" x1="300" y1="58" x2="298" y2="68" stroke="#146632" strokeWidth=".8" opacity=".6"/>
+
+            {/* Floating leaf 2 */}
+            <path className="float-leaf2" d="M420 80 Q432 70 440 78 Q436 90 424 88 Q416 85 420 80Z" fill="#22a854" opacity=".65"/>
+            <line className="float-leaf2" x1="430" y1="78" x2="428" y2="90" stroke="#1a7a40" strokeWidth=".8" opacity=".6"/>
+
+            {/* Floating leaf 3 (small) */}
+            <path className="float-leaf3" d="M356 44 Q363 37 369 43 Q366 51 358 49 Q353 47 356 44Z" fill="#16a34a" opacity=".6"/>
+
+            {/* Recycle arrows (right side) */}
+            <g opacity=".55" transform="translate(360, 88)">
+              <path d="M20 0 A20 20 0 0 1 40 20" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M40 20 A20 20 0 0 1 20 40" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round"/>
+              <path d="M20 40 A20 20 0 0 1 0 20" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round"/>
+              {/* Arrow heads */}
+              <polygon points="18,0 26,0 22,8" fill="#22c55e"/>
+              <polygon points="38,18 46,22 38,28" fill="#22c55e"/>
+              <polygon points="2,22 -6,18 2,14" fill="#22c55e"/>
+            </g>
+
+            {/* Sustainability score ring (far right) */}
+            <circle cx="468" cy="96" r="36" fill="none" stroke="#1e293b" strokeWidth="6"/>
+            <circle cx="468" cy="96" r="36" fill="none" stroke="#3b82f6" strokeWidth="6"
+              strokeDasharray={`${2 * Math.PI * 36 * (bestSust / 100)} ${2 * Math.PI * 36}`}
+              strokeDashoffset={2 * Math.PI * 36 * 0.25}
+              strokeLinecap="round" opacity=".8"/>
+            <text x="468" y="92" textAnchor="middle" fontSize="15" fontWeight="700" fill="#e8e8e8" fontFamily="monospace">{bestSust}</text>
+            <text x="468" y="106" textAnchor="middle" fontSize="9" fill="#888" fontFamily="sans-serif" letterSpacing=".05em">BEST</text>
+          </svg>
         </div>
-        <div className="hero-stats">
-          <div className="hero-stat"><span className="hero-num">{totalTurns}</span><span className="hero-label">Decisions</span></div>
-          <div className="hero-stat"><span className="hero-num">{totalStars}</span><span className="hero-label">Stars</span></div>
-          <div className="hero-stat"><span className="hero-num">{bestSust}</span><span className="hero-label">Best Score</span></div>
+
+        {/* ── Text + stats ── */}
+        <div className="hero-content">
+          <div className="hero-eyebrow">SDG 12 · Sustainability Simulator</div>
+          <h2 className="hero-title">Welcome back,<br/><span className="hero-name">{user.name}</span></h2>
+          <p className="hero-sub">Make decisions. Shape the world. Build a sustainable future.</p>
+          <div className="hero-stats-row">
+            <div className="hero-stat-pill">
+              <span className="hsp-num">{totalTurns}</span>
+              <span className="hsp-label">Decisions</span>
+            </div>
+            <div className="hero-stat-pill">
+              <span className="hsp-num">{totalStars}</span>
+              <span className="hsp-label">Stars</span>
+            </div>
+            <div className="hero-stat-pill">
+              <span className="hsp-num">{earnedKeys.size}</span>
+              <span className="hsp-label">Achievements</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -265,6 +443,9 @@ function PlayView({ user, level, navigate, onUpdate }) {
 
   useEffect(() => { loadLevel(); }, [level, user.id]);
 
+  // Play the correct background music for this level
+  useEffect(() => { audio.playBg(level); }, [level]);
+
   // Shuffle options whenever a new event arrives
   useEffect(() => {
     if (event && event.options) {
@@ -339,6 +520,7 @@ function PlayView({ user, level, navigate, onUpdate }) {
 
       if (result.newAchievements?.length) {
         result.newAchievements.forEach((a) => addToast(`${a.icon} Achievement: ${a.label}`, "achievement"));
+        audio.playAchievement();
       }
       if (result.streakBonus > 0) addToast(`🔥 Streak bonus! +${result.streakBonus} sustainability`, "streak");
 
@@ -502,6 +684,7 @@ function PlayView({ user, level, navigate, onUpdate }) {
               <button
                 className="primary-btn"
                 onClick={() => {
+                  audio.playClick();
                   setShowFeedbackModal(false);
                   if (levelComplete) {
                     navigate("summary", { level, result: progress });
@@ -529,7 +712,7 @@ function PlayView({ user, level, navigate, onUpdate }) {
                 key={idx}
                 option={option}
                 index={idx}
-                onChoose={() => handleChoose(idx)}
+                onChoose={() => { audio.playClick(); handleChoose(idx); }}
                 disabled={choosing}
                 revealed={revealed}
                 chosen={revealed && idx === chosenShuffledIdx}
@@ -541,7 +724,7 @@ function PlayView({ user, level, navigate, onUpdate }) {
           {/* Next Turn button appears after reveal */}
           {revealed && pendingNextEvent && (
             <div className="next-turn-row">
-              <button className="primary-btn" onClick={handleNextTurn}>Next Turn →</button>
+              <button className="primary-btn" onClick={() => { audio.playClick(); handleNextTurn(); }}>Next Turn →</button>
             </div>
           )}
         </section>

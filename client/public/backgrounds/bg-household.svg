@@ -1,0 +1,191 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3840 2160" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="sunset" cx="18%" cy="75%" r="55%">
+      <stop offset="0%" stop-color="#e8780a" stop-opacity=".35"/>
+      <stop offset="40%" stop-color="#c05010" stop-opacity=".15"/>
+      <stop offset="100%" stop-color="#0a0c06" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="porch" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffcc60" stop-opacity=".3"/>
+      <stop offset="100%" stop-color="#ffcc60" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="win1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f5b040" stop-opacity=".5"/>
+      <stop offset="100%" stop-color="#f5b040" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Deep dusk sky -->
+  <rect width="3840" height="2160" fill="#14100a"/>
+  <rect width="3840" height="2160" fill="url(#sunset)"/>
+
+  <!-- Stars (sparse — early evening) -->
+  <circle cx="300"  cy="120" r="2"   fill="#fff" opacity=".55"/>
+  <circle cx="680"  cy="80"  r="1.8" fill="#fff" opacity=".48"/>
+  <circle cx="1050" cy="150" r="2.2" fill="#fff" opacity=".6"/>
+  <circle cx="1420" cy="90"  r="1.8" fill="#fff" opacity=".5"/>
+  <circle cx="1790" cy="130" r="2"   fill="#fff" opacity=".55"/>
+  <circle cx="2160" cy="75"  r="1.8" fill="#fff" opacity=".48"/>
+  <circle cx="2530" cy="145" r="2.2" fill="#fff" opacity=".6"/>
+  <circle cx="2900" cy="95"  r="1.8" fill="#fff" opacity=".5"/>
+  <circle cx="3270" cy="125" r="2"   fill="#fff" opacity=".55"/>
+  <circle cx="3640" cy="88"  r="1.8" fill="#fff" opacity=".48"/>
+  <circle cx="480"  cy="200" r="1.5" fill="#fff" opacity=".4"/>
+  <circle cx="860"  cy="240" r="1.8" fill="#fff" opacity=".45"/>
+  <circle cx="1230" cy="195" r="1.5" fill="#fff" opacity=".38"/>
+  <circle cx="1600" cy="230" r="1.8" fill="#fff" opacity=".45"/>
+  <circle cx="1970" cy="200" r="1.5" fill="#fff" opacity=".4"/>
+  <circle cx="2340" cy="238" r="1.8" fill="#fff" opacity=".45"/>
+  <circle cx="2710" cy="198" r="1.5" fill="#fff" opacity=".38"/>
+  <circle cx="3080" cy="228" r="1.8" fill="#fff" opacity=".45"/>
+  <circle cx="3450" cy="202" r="1.5" fill="#fff" opacity=".4"/>
+  <circle cx="3800" cy="235" r="1.8" fill="#fff" opacity=".45"/>
+
+  <!-- Far rolling hills -->
+  <path d="M0 1400 Q480 1220 960 1380 Q1440 1180 1920 1340 Q2400 1160 2880 1320 Q3360 1180 3840 1300 L3840 2160 L0 2160Z" fill="#151c0a"/>
+  <!-- Mid hills -->
+  <path d="M0 1520 Q640 1350 1280 1500 Q1920 1330 2560 1480 Q3200 1340 3840 1460 L3840 2160 L0 2160Z" fill="#18200c"/>
+  <!-- Near ground -->
+  <path d="M0 1680 Q960 1580 1920 1640 Q2880 1580 3840 1620 L3840 2160 L0 2160Z" fill="#1a240e"/>
+
+  <!-- HOUSE — central, large -->
+  <!-- House body -->
+  <rect x="1120" y="1200" width="1600" height="900" fill="#0d1608"/>
+  <!-- Roof (large triangular) -->
+  <polygon points="960,1200 1920,780 2880,1200" fill="#0a1206"/>
+  <!-- Roof ridge line detail -->
+  <line x1="960" y1="1200" x2="1920" y2="780" stroke="#0e1a0a" stroke-width="4"/>
+  <line x1="2880" y1="1200" x2="1920" y2="780" stroke="#0e1a0a" stroke-width="4"/>
+
+  <!-- Chimney left -->
+  <rect x="1380" y="900" width="80" height="220" fill="#0e1608"/>
+  <!-- Chimney right -->
+  <rect x="2340" y="940" width="80" height="200" fill="#0e1608"/>
+  <!-- Smoke wisps left -->
+  <path d="M1420 898 Q1428 858 1418 820 Q1408 782 1418 742 Q1428 702 1418 662" fill="none" stroke="#6a8a5a" stroke-width="5" stroke-linecap="round" opacity=".3"/>
+  <path d="M1438 898 Q1448 852 1436 812 Q1424 772 1436 728" fill="none" stroke="#6a8a5a" stroke-width="3" stroke-linecap="round" opacity=".2"/>
+  <!-- Smoke wisps right -->
+  <path d="M2378 938 Q2386 898 2376 858 Q2366 818 2376 778" fill="none" stroke="#6a8a5a" stroke-width="4" stroke-linecap="round" opacity=".25"/>
+
+  <!-- Front door -->
+  <rect x="1800" y="1720" width="240" height="380" rx="6" fill="#182010"/>
+  <!-- Door frame -->
+  <rect x="1794" y="1714" width="252" height="392" rx="8" fill="none" stroke="#1e2a14" stroke-width="6"/>
+  <!-- Door knob -->
+  <circle cx="2020" cy="1920" r="12" fill="#3a4a2a" opacity=".8"/>
+  <!-- Door window (fanlight) -->
+  <rect x="1840" y="1734" width="160" height="80" rx="40" fill="#f0a030" opacity=".12"/>
+
+  <!-- Left large window with glow -->
+  <rect x="1160" y="1260" width="320" height="260" rx="4" fill="#f09020" opacity=".18"/>
+  <rect x="1176" y="1274" width="130" height="105" rx="2" fill="#f5b040" opacity=".42"/>
+  <rect x="1314" y="1274" width="130" height="105" rx="2" fill="#f5b040" opacity=".38"/>
+  <rect x="1176" y="1386" width="130" height="118" rx="2" fill="#f5b040" opacity=".38"/>
+  <rect x="1314" y="1386" width="130" height="118" rx="2" fill="#f5b040" opacity=".42"/>
+  <!-- Window glow spill -->
+  <ellipse cx="1320" cy="1390" rx="220" ry="100" fill="#f5b040" opacity=".06"/>
+
+  <!-- Right large window with glow -->
+  <rect x="2360" y="1260" width="320" height="260" rx="4" fill="#f09020" opacity=".18"/>
+  <rect x="2376" y="1274" width="130" height="105" rx="2" fill="#f5b040" opacity=".45"/>
+  <rect x="2514" y="1274" width="130" height="105" rx="2" fill="#f5b040" opacity=".38"/>
+  <rect x="2376" y="1386" width="130" height="118" rx="2" fill="#f5b040" opacity=".35"/>
+  <rect x="2514" y="1386" width="130" height="118" rx="2" fill="#f5b040" opacity=".42"/>
+  <ellipse cx="2520" cy="1390" rx="220" ry="100" fill="#f5b040" opacity=".06"/>
+
+  <!-- Upper storey windows -->
+  <rect x="1400" y="1320" width="200" height="160" rx="4" fill="#f09020" opacity=".15"/>
+  <rect x="1416" y="1332" width="80"  height="65"  rx="2" fill="#f5b040" opacity=".32"/>
+  <rect x="1504" y="1332" width="80"  height="65"  rx="2" fill="#f5b040" opacity=".28"/>
+  <rect x="2240" y="1320" width="200" height="160" rx="4" fill="#f09020" opacity=".15"/>
+  <rect x="2256" y="1332" width="80"  height="65"  rx="2" fill="#f5b040" opacity=".3"/>
+  <rect x="2344" y="1332" width="80"  height="65"  rx="2" fill="#f5b040" opacity=".35"/>
+
+  <!-- Attic window in roof -->
+  <rect x="1800" y="960" width="240" height="180" rx="4" fill="#f09020" opacity=".1"/>
+  <rect x="1818" y="974" width="96"  height="72"  rx="2" fill="#f5b040" opacity=".22"/>
+  <rect x="1926" y="974" width="96"  height="72"  rx="2" fill="#f5b040" opacity=".18"/>
+
+  <!-- Porch light -->
+  <circle cx="1920" cy="1715" r="60" fill="#ffcc60" opacity=".1"/>
+  <circle cx="1920" cy="1715" r="25" fill="#ffdd88" opacity=".2"/>
+  <rect x="1910" y="1680" width="20" height="40" fill="#1e2a14" opacity=".6"/>
+
+  <!-- Garage left -->
+  <rect x="880" y="1560" width="360" height="480" fill="#0c1408"/>
+  <rect x="880" y="1560" width="360" height="20" fill="#101c0a"/>
+  <!-- Garage door panels -->
+  <rect x="896" y="1580" width="328" height="60" rx="2" fill="#0e1808" stroke="#141e0c" stroke-width="2"/>
+  <rect x="896" y="1648" width="328" height="60" rx="2" fill="#0e1808" stroke="#141e0c" stroke-width="2"/>
+  <rect x="896" y="1716" width="328" height="60" rx="2" fill="#0e1808" stroke="#141e0c" stroke-width="2"/>
+
+  <!-- Garage right -->
+  <rect x="2600" y="1560" width="360" height="480" fill="#0c1408"/>
+  <rect x="2600" y="1560" width="360" height="20" fill="#101c0a"/>
+  <rect x="2616" y="1580" width="328" height="60" rx="2" fill="#0e1808" stroke="#141e0c" stroke-width="2"/>
+  <rect x="2616" y="1648" width="328" height="60" rx="2" fill="#0e1808" stroke="#141e0c" stroke-width="2"/>
+  <rect x="2616" y="1716" width="328" height="60" rx="2" fill="#0e1808" stroke="#141e0c" stroke-width="2"/>
+
+  <!-- Picket fence left -->
+  <rect x="200" y="1940" width="1080" height="18" fill="#1a2410"/>
+  <rect x="260" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="320" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="380" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="440" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="500" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="560" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="620" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="680" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="740" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="800" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="860" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="920" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="980" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="1040" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="1100" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="1160" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <!-- Picket fence right -->
+  <rect x="2560" y="1940" width="1080" height="18" fill="#1a2410"/>
+  <rect x="2620" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="2680" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="2740" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="2800" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="2860" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="2920" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="2980" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3040" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3100" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3160" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3220" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3280" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3340" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3400" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3460" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+  <rect x="3520" y="1910" width="22" height="60" rx="4" fill="#1a2410"/>
+
+  <!-- Big oak tree left -->
+  <rect x="440" y="1380" width="50" height="640" fill="#1a2410"/>
+  <circle cx="465" cy="1220" r="210" fill="#1a3010"/>
+  <circle cx="348" cy="1300" r="150" fill="#1c3412"/>
+  <circle cx="590" cy="1280" r="170" fill="#162a0e"/>
+  <circle cx="465" cy="1060" r="130" fill="#183214"/>
+
+  <!-- Big oak tree right -->
+  <rect x="3350" y="1400" width="50" height="620" fill="#1a2410"/>
+  <circle cx="3375" cy="1240" r="200" fill="#1a3010"/>
+  <circle cx="3260" cy="1320" r="145" fill="#1c3412"/>
+  <circle cx="3500" cy="1300" r="160" fill="#162a0e"/>
+  <circle cx="3375" cy="1080" r="125" fill="#183214"/>
+
+  <!-- Smaller trees scattered -->
+  <rect x="3750" y="1600" width="35" height="420" fill="#182210"/>
+  <circle cx="3768" cy="1470" r="130" fill="#1a2e10"/>
+  <circle cx="3700" cy="1540" r="95"  fill="#1c3212"/>
+
+  <!-- Mailbox -->
+  <rect x="660"  y="1940" width="110" height="70" rx="14" fill="#1a2810"/>
+  <rect x="698"  y="1910" width="34"  height="34" fill="#1a2810"/>
+
+  <!-- Ground line -->
+  <rect x="0" y="2120" width="3840" height="40" fill="#1c2808"/>
+</svg>
