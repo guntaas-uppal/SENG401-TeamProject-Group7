@@ -16,6 +16,17 @@ app.get("/", (req, res) => {
   res.json({ name: "SDG 12 Sustainability Simulator API", version: "2.0.0", status: "running" });
 });
 
+app.get("/debug/users", (req, res) => {
+  const db = require("./db/database");
+
+  db.all("SELECT * FROM users", [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
 app.use("/auth", authRoutes);
 app.use("/game", gameRoutes);
 
