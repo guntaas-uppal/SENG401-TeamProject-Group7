@@ -16,15 +16,14 @@ app.get("/", (req, res) => {
   res.json({ name: "SDG 12 Sustainability Simulator API", version: "2.0.0", status: "running" });
 });
 
-app.get("/debug/users", (req, res) => {
-  const db = require("./db/database");
-
-  db.all("SELECT * FROM users", [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(rows);
-  });
+app.get("/debug/users", async (req, res) => {
+  try {
+    const { all } = require("./db/database"); // ✅ correct import
+    const users = await all("SELECT * FROM users");
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.use("/auth", authRoutes);
