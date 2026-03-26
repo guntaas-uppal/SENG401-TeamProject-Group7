@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 
 app.get("/debug/users", async (req, res) => {
   try {
-    const { all } = require("./db/database"); // ✅ correct import
+    const { all } = require("./db/database");
     const users = await all("SELECT * FROM users");
     res.json(users);
   } catch (error) {
