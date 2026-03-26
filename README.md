@@ -126,7 +126,13 @@ The database is created automatically when the server starts for the first time.
 
 ---
 
-## Running the App
+## Running the App from URL
+
+Frontend - [EcoSim](https://ecosim-sustainability.netlify.app/)
+
+Backend - [Ecosim-Backend](https://seng401-teamproject-group7.onrender.com/auth/demo-users)
+
+## Running the App by cloning the repository
 
 You need two terminals open at the same time, one for the backend and one for the frontend.
 
